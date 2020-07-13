@@ -1,0 +1,14 @@
+<!-- dialog-box.component.html -->
+<h1 mat-dialog-title>Row Action selected <strong>"{{action}}"</strong></h1>
+<div mat-dialog-content>
+  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
+    <input placeholder="{{action}} SR Number" matInput [(ngModel)]="local_data.srNumber">
+  </mat-form-field>
+  <ng-template #elseTemplate>
+    Do you want to <b>{{local_data.srNumber}}</b>?
+  </ng-template>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="doAction()">{{action}}</button>
+  <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+</div>

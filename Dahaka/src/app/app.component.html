@@ -1,0 +1,37 @@
+<mat-sidenav-container class="main-container">
+    <mat-sidenav #sidenav [mode]="mode.value">
+        <ul>
+            <mat-toolbar color="primary">
+                <mat-toolbar-row>
+                    <button mat-icon-button (click)="sidenav.toggle()">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                    <div class="mat-headline" (click)="sidenav.toggle()">Dahaka</div>
+                </mat-toolbar-row>
+            </mat-toolbar>
+        </ul>
+        <ul>
+            <button mat-button (click)="sidenav.toggle()" routerLink="/">Time Sheet</button>
+            
+        </ul>
+        <ul>
+            <button mat-button (click)="sidenav.toggle()" routerLink="/vacation">Vacation</button>
+        </ul>
+        <ul>
+            <button mat-button (click)="sidenav.toggle()" routerLink="/admin">Admin</button>
+        </ul>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            <mat-toolbar-row>
+                <button mat-icon-button (click)="sidenav.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <div class="mat-headline" (click)="sidenav.toggle()">Dahaka</div>
+            </mat-toolbar-row>
+        </mat-toolbar>
+
+        <!-- User Detaisl summary and form here -->
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

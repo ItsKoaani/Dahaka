@@ -1,0 +1,141 @@
+<mat-grid-list class="admin-grid-list" cols="1" rowHeight="245px">
+    <mat-grid-tile [colspan]="1" [rowspan]="2">
+        <ul>
+            <mat-form-field class="status-filter-form-field">
+                <mat-label>Search</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. SR Description, Number, etc.." #input>
+            </mat-form-field>
+        </ul>
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort class="tableAdmin">
+
+                <ng-container matColumnDef="srId">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> SR ID </th>
+                    <td mat-cell *matCellDef="let row"> {{row.srId}} </td>
+                </ng-container>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="srNumber">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> SR NUMBER </th>
+                    <td mat-cell *matCellDef="let row"> {{row.srNumber}} </td>
+                </ng-container>
+
+                
+                <ng-container matColumnDef="srDesc">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> SR DESCRIPTION </th>
+                    <td mat-cell *matCellDef="let row"> {{row.srDesc}} </td>
+                </ng-container>
+
+               
+                <ng-container matColumnDef="srAssignee">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ASSIGNEE </th>
+                    <td mat-cell *matCellDef="let row"> {{row.srAssignee}} </td>
+                </ng-container>
+
+               
+                <ng-container matColumnDef="srStatus">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> SR STATUS </th>
+                    <td mat-cell *matCellDef="let row"> {{row.srStatus}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="openDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> OPEN DATE </th>
+                    <td mat-cell *matCellDef="let row"> {{row.openDate}} </td>  
+                </ng-container>
+
+                <ng-container matColumnDef="srPriority">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> PRIORITY </th>
+                    <td mat-cell *matCellDef="let row"> {{row.srPriority}} </td>
+                </ng-container> 
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> ACTION </th>
+                    <td mat-cell *matCellDef="let element" class="action-link"> 
+                      <a (click)="openDialog('Update',element)">Edit</a> | 
+                      <a (click)="openDialog('Delete',element)">Delete</a>  
+                    </td>
+                  </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+
+            </table>
+
+            <mat-paginator  [pageSize] = "5" showFirstLastButtons>     </mat-paginator>
+        </div>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <form [formGroup]="registerForm" (ngSubmit)="onSave()" class="sr-details-input-form">    
+        <div class="controlers-container">
+        <table>
+            <tr>
+                <td style="width:33%">
+                    <mat-form-field appearance="outline" class="form-inputs-Admin">
+                        <mat-label>SR Number</mat-label>
+                        <input matInput placeholder="Placeholder" formControlName="fcSrNumber" >
+                    </mat-form-field>
+                </td>
+                <td style="width:33%">
+                    <mat-form-field appearance="outline" class="form-inputs-Admin">
+                        <mat-label>SR Description</mat-label>
+                        <input matInput placeholder="Placeholder" formControlName="fcDescription" >
+                    </mat-form-field>
+                </td>
+                <td style="width:33%">
+                    <mat-form-field appearance="outline" class="form-inputs-Admin">
+                        <mat-label>Assignee</mat-label>
+                        <mat-select formControlName="fcAssignee" name="assignee"  >
+                          <mat-option *ngFor="let item of resourceList" [value]="item">
+                            {{item.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field appearance="outline" class="form-inputs-Admin" >
+                        <mat-label>SR Status</mat-label>
+                        <input matInput placeholder="Placeholder" formControlName="fcSrStatus" name="fcSrStatus" >
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field appearance="outline" class="form-inputs-Admin">
+                        <mat-label>Open Date</mat-label>
+                        <input matInput [matDatepicker]="openDatePicker" formControlName="fcOpenDate"  >
+                        <mat-datepicker-toggle matSuffix [for]="openDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #openDatePicker disabled="false"></mat-datepicker>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field appearance="outline" class="form-inputs-Admin" >
+                        <mat-label>Priority</mat-label>
+                        <mat-select formControlName="fcPriority" name="fcPriority"  >
+                          <mat-option *ngFor="let item of priorityList" [value]="item">
+                            {{item}}
+                          </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <button mat-raised-button color="primary" type="submit" >Save/Add</button>
+                </td>
+                <td>    
+                    <button mat-raised-button color="accent" type="reset" (click)="onReset()" >Reset</button>
+                </td>
+            </tr>
+        </table>
+        
+        </div>
+    </form>
+    </mat-grid-tile>
+</mat-grid-list>

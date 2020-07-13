@@ -1,0 +1,116 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.center {
+    /* text-align-last: center; */
+    /* margin: 15%; */
+    vertical-align: middle;
+}
+
+form, login-form, ng-pristine, ng-valid,ng-touched {
+    text-align-last: center;
+}
+
+.mat-headline {
+    /* font-size: xx-large; */
+    font-family: initial;
+    align-self: flex-end;
+}
+
+.mat-grid-tile .mat-figure {
+    display: contents !important;
+}
+
+
+.controlers-container > *{
+    width: 100%;
+} 
+
+table, th, td {
+    font-size: 95%;
+  }
+
+  .form-inputs{
+    width: 80%;
+  }
+
+
+  .td{
+    vertical-align:  text-bottom;
+  }
+
+ .tableAdmin {
+    width: 100%;
+  }
+
+  th.mat-sort-header-sorted {
+    color: black;
+  }
+
+  .status-filter-form-field{
+    font-size: 20px;
+    width: 60%;
+  }
+  
+  /* .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 1.0em !important; 
+} */
+
+    /* .controlers-container{
+        width: 100%;
+        padding: 5%; */
+        /* size: 100px;
+    } */
+
+
+
+/* .controlers-container{
+    
+    padding: 1%;
+   
+} */
+
+/* .controlers-container{
+    width: 90%;
+    padding: 5%;
+    size: 100px;
+}
+
+.controlers-container > *{
+    width: 50%;
+} */
+
+
+/* 
+form normal-form{
+    margin: 10px;
+}
+
+
+.controlers-container{
+    width: 100%;
+    padding: 3%;
+    size: 20px;
+}
+
+.controlers-container > *{
+    width: 50%;
+}
+
+
+
+.example-container{
+    font-size: x-small;
+} */
+
+/* .mat-headline{
+    flex: auto;
+} */
+
+
+/* textarea.mat-input-element {
+    padding: 0px 0;
+    margin: -15px 0;
+} */
