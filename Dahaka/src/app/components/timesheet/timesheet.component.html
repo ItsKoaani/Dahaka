@@ -1,0 +1,195 @@
+<header (messageEvent)="receiveMessage($event)">
+<!-- User Detaisl summary and form here -->
+
+<mat-grid-list cols="1" rowHeight="131px">
+  <mat-grid-tile rowspan="3">
+    <!-- <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-overloaded"></mat-grid-tile> -->
+    <!-- User detail summary here..  -->
+    <!-- <h1>
+      <p>Time Sheet Details</p>
+    </h1> -->
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" style="width:100%">
+
+        <!-- Column 1-->
+        <ng-container matColumnDef="startDate">
+          <th mat-header-cell *matHeaderCellDef> START DATE </th>
+          <td mat-cell *matCellDef="let element"> {{element.startDate}} </td>
+        </ng-container>
+
+        <!--  Column 2 -->
+        <ng-container matColumnDef="endDate">
+          <th mat-header-cell *matHeaderCellDef> END DATE </th>
+          <td mat-cell *matCellDef="let element"> {{element.endDate}} </td>
+        </ng-container>
+
+        <!--  Column 2 -->
+        <ng-container matColumnDef="request">
+          <th mat-header-cell *matHeaderCellDef> REQUEST </th>
+          <td mat-cell *matCellDef="let element"> {{element.request}} </td>
+        </ng-container>
+
+        <!--  Column 2 -->
+        <ng-container matColumnDef="srStatus">
+          <th mat-header-cell *matHeaderCellDef> STATUS </th>
+          <td mat-cell *matCellDef="let element"> {{element.srStatus}} </td>
+        </ng-container>
+
+        <!--  Column 2 -->
+        <ng-container matColumnDef="assignee"> 
+          <th mat-header-cell *matHeaderCellDef> ASSIGNEE </th>
+          <td mat-cell *matCellDef="let element"> {{element.assignee}} </td>
+        </ng-container>
+
+        <!--  Column 2 -->
+        <ng-container matColumnDef="effortHours">
+          <th mat-header-cell *matHeaderCellDef> EFFORT HOURS </th>
+          <td mat-cell *matCellDef="let element"> {{element.effortHours}} </td>
+        </ng-container>
+
+        <!--  Column 7 -->
+        <ng-container matColumnDef="comments">
+          <th mat-header-cell *matHeaderCellDef> COMMENTS </th>
+          <td mat-cell *matCellDef="let element"> {{element.comments}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSize]="5" showFirstLastButtons></mat-paginator>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile rowspan="2">
+    <!-- <mat-grid-tile [colspan]="1" [rowspan]="1"></mat-grid-tile> -->
+    <!-- Form One view here..  -->
+    <!-- <h1>
+      <p>Enter Time Sheet</p>
+    </h1> -->
+    <div class="form-one-container">
+      <div class="form-class">
+        <form [formGroup]="timeSheetForm" (ngSubmit)="onSave()"  class="sr-details-input-form">
+          <div class="controlers-container">
+            <table>
+              <tr>
+                <td style="width:25%">
+                  <mat-form-field appearance="outline" class="form-inputs">
+                    <mat-label>Start Date</mat-label>
+                    <input matInput [matDatepicker]="startDatePicker" formControlName="fcStartDate">
+                    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker disabled="false"></mat-datepicker>
+                  </mat-form-field>
+                </td>
+                <td style="width:25%">
+                  <mat-form-field appearance="outline" class="form-inputs">
+                    <mat-label>End Date</mat-label>
+                    <input matInput [matDatepicker]="endDatePicker" formControlName="fcEndDate">
+                    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker disabled="false"></mat-datepicker>
+                  </mat-form-field>
+                </td>
+                <td style="width:25%">
+                  <mat-form-field appearance="outline" class="form-inputs">
+                    <mat-label>Project/Ticket</mat-label>
+                    <mat-select formControlName="fcSelectedTicketValue">
+                      <mat-option>--</mat-option>
+                      <mat-option *ngFor="let item of srDetailList" [value]="item" name="formSrNumber">
+                        {{item.srNumber}} - {{item.desc}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+                <td style="width:25%">
+                  <mat-form-field appearance="outline" class="form-inputs">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="fcSelectedSrStatusValue" name="fcSelectedSrStatusValue">
+                      <mat-option *ngFor="let item of statusList" [value]="item">
+                        {{item}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <mat-form-field appearance="outline" class="form-inputs">
+                    <mat-label>Effort in Hours </mat-label>
+                    <input matInput value="" formControlName="fcEffort" name="fcEffort">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field appearance="outline" class="form-inputs">
+                    <!-- <mat-select formControlName="fcAssignee" name="assignee">
+                      <mat-option *ngFor="let item of resourceList" value="item">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select> -->
+                    <mat-label>Assignee</mat-label>
+                    <input matInput formControlName="fcAssignee" name="assignee">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field appearance="outline" class="form-inputs">
+                    <mat-label>PPM</mat-label>
+                    <mat-select formControlName="fcSelectedPpmValue">
+                      <mat-option>--</mat-option>
+                      <mat-option *ngFor="let item of ppmList" [value]="item" name="formPmmNumber">
+                        {{item.ppmNumber}} - {{item.ppmDesc}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field appearance="outline" class="form-inputs">
+                    <mat-label>CATW</mat-label>
+                    <mat-select formControlName="fcSelectedCatwValue">
+                      <mat-option>--</mat-option>
+                      <mat-option *ngFor="let item of catwList" [value]="item" name="formCatw">
+                        {{item.catwNumber}} - {{item.catwDesc}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <mat-form-field appearance="outline" style="width:39%" class="form-inputs">
+                    <mat-label>PPM Defect </mat-label>
+                    <input matInput value="" formControlName="fcPpmDefect" name="fcPpmDefect">
+                  </mat-form-field>
+                  &nbsp;
+                  <mat-form-field appearance="outline" style="width:39%" class="form-inputs">
+                    <mat-label>Work Package </mat-label>
+                    <input matInput value="" formControlName="fcWorkPackage" name="fcWorkPackage">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field appearance="outline" style="width:39%" class="form-inputs">
+                    <mat-label>Proposal </mat-label>
+                    <input matInput value="" formControlName="fcProposal" name="fcProposal">
+                  </mat-form-field>
+                  &nbsp;
+                  <mat-form-field appearance="outline" style="width:39%" class="form-inputs">
+                    <mat-label>TDR</mat-label>
+                    <input matInput value="" formControlName="fcTdr" name="fcTdr">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field appearance="outline" class="form-inputs">
+                    <mat-label>Comments </mat-label>
+                    <textarea matInput value="" formControlName="fcComment" name="fcComment"></textarea>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <button mat-raised-button color="primary" type="submit">Save</button>
+                  &nbsp;&nbsp;&nbsp;
+                  <button mat-raised-button color="warm" (click)="onReset()" type="reset">Reset</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </form>
+      </div>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
+</header>

@@ -1,1 +1,90 @@
-<p>srinput works!</p>
+<form [formGroup]="registerForm" (ngSubmit)="onSave()" class="sr-details-input-form">    
+    <div class="controlers-container">
+    <table>
+        <tr>
+            <td style="width:33%">
+                <mat-form-field appearance="outline" class="form-inputs-Admin">
+                    <mat-label>SR Number</mat-label>
+                    <input class="srNumberClass" matInput type="number" formControlName="fcSrNumber" >
+                </mat-form-field>
+            </td>
+            <td style="width:33%">
+                <mat-form-field appearance="outline" class="form-inputs-Admin">
+                    <mat-label>SR Description</mat-label>
+                    <input matInput formControlName="fcDescription" >
+                </mat-form-field>
+            </td>
+            <td style="width:33%">
+                <mat-form-field appearance="outline" class="form-inputs-Admin">
+                    <mat-label>Ticket Type</mat-label>
+                    <mat-select formControlName="fcType" name="fcType"  >
+                      <mat-option *ngFor="let item of typeList" [value]="item">
+                        {{item}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <mat-form-field appearance="outline" class="form-inputs-Admin">
+                    <mat-label>Group</mat-label>
+                    <mat-select formControlName="fcGroup" name="fcGroup"  >
+                      <mat-option *ngFor="let item of groupList" [value]="item">
+                        {{item}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field appearance="outline" class="form-inputs-Admin">
+                    <mat-label>Assignee</mat-label>
+                    <mat-select formControlName="fcAssignee" name="assignee"  >
+                      <mat-option *ngFor="let item of resourceList" [value]="item">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+            </td>
+            <td>
+                <mat-form-field appearance="outline" class="form-inputs-Admin">
+                    <mat-label>SR Status</mat-label>
+                    <mat-select formControlName="fcSrStatus" name="fcSrStatus"  >
+                      <mat-option *ngFor="let item of statusList" [value]="item">
+                        {{item}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <mat-form-field appearance="outline" class="form-inputs-Admin">
+                    <mat-label>Open Date</mat-label>
+                    <input matInput [matDatepicker]="openDatePicker" formControlName="fcOpenDate" [max]="today">
+                    <mat-datepicker-toggle matSuffix [for]="openDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #openDatePicker disabled="false"></mat-datepicker>
+                </mat-form-field>                
+            </td>
+            <td>
+                <mat-form-field appearance="outline" class="form-inputs-Admin" >
+                    <mat-label>Priority</mat-label>
+                    <mat-select formControlName="fcPriority" name="fcPriority"  >
+                      <mat-option *ngFor="let item of priorityList" [value]="item">
+                        {{item}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td>
+                <button mat-raised-button color="primary" type="submit" >Save/Add</button>    
+                &nbsp;&nbsp;&nbsp; 
+                <button mat-raised-button color="accent" type="reset" (click)="onReset()" >Reset</button>
+            </td>
+        </tr>
+    </table>
+    
+    </div>
+</form>
+

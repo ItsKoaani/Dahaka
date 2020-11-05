@@ -1,4 +1,4 @@
-<mat-sidenav-container class="main-container">
+<!-- <mat-sidenav-container class="main-container" >
     <mat-sidenav #sidenav [mode]="mode.value">
         <ul>
             <mat-toolbar color="primary">
@@ -11,14 +11,16 @@
             </mat-toolbar>
         </ul>
         <ul>
-            <button mat-button (click)="sidenav.toggle()" routerLink="/">Time Sheet</button>
-            
+            <button mat-button (click)="sidenav.toggle()" routerLink="/timesheet">Time Sheet</button>
         </ul>
         <ul>
             <button mat-button (click)="sidenav.toggle()" routerLink="/vacation">Vacation</button>
         </ul>
         <ul>
             <button mat-button (click)="sidenav.toggle()" routerLink="/admin">Admin</button>
+        </ul>
+        <ul>
+            <button mat-button (click)="sidenav.toggle()" routerLink="/report">Report</button>
         </ul>
     </mat-sidenav>
     <mat-sidenav-content>
@@ -29,9 +31,12 @@
                 </button>
                 <div class="mat-headline" (click)="sidenav.toggle()">Dahaka</div>
             </mat-toolbar-row>
-        </mat-toolbar>
-
-        <!-- User Detaisl summary and form here -->
-        <router-outlet></router-outlet>
+        </mat-toolbar>        
+        <router-outlet name="main"></router-outlet>
     </mat-sidenav-content>
-</mat-sidenav-container>
+</mat-sidenav-container> -->
+
+<router-outlet></router-outlet>
+<router-outlet name="main"></router-outlet>
+
+<!-- <router-outlet></router-outlet> -->

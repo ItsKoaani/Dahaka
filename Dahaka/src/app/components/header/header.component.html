@@ -1,0 +1,152 @@
+<!-- <mat-sidenav-container class="main-container">
+    <mat-sidenav #sidenav [mode]="mode.value">
+        <ul>
+            <mat-toolbar color="primary">
+                <mat-toolbar-row>
+                    <button mat-icon-button (click)="sidenav.toggle()">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                    <div class="mat-headline" (click)="sidenav.toggle()">Dahaka</div>
+                </mat-toolbar-row>
+            </mat-toolbar>
+        </ul>
+        <ul>
+            <button mat-button (click)="sidenav.toggle() && comToggle()" class="sidenav-menu">
+                <mat-icon class="material-icons">timer</mat-icon>
+                &nbsp;Time Sheet
+            </button>
+        </ul>
+        <ul>
+            <button mat-button (click)="sidenav.toggle() && vacationToggle()" class="sidenav-menu">
+                <mat-icon class="material-icons">explore</mat-icon>
+                &nbsp;Vacation
+            </button>
+        </ul>
+        <ul>
+            <button mat-button (click)="sidenav.toggle() && adminToggle()" class="sidenav-menu">
+                <mat-icon class="material-icons">admin_panel_settings</mat-icon>
+                &nbsp;Admin
+            </button>
+        </ul>
+        <ul>
+            <button mat-button (click)="sidenav.toggle() && reportToggle()" class="sidenav-menu">
+                <mat-icon class="material-icons">timeline</mat-icon> 
+                &nbsp;Report
+            </button>
+        </ul> 
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            <mat-toolbar-row>
+                <button mat-icon-button (click)="sidenav.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <div class="app-title" (click)="sidenav.toggle()">Dahaka</div>
+                <span class="spacer"></span>
+                <button mat-stroked-button [routerLink]="['/profile']">Profile</button>
+                <button mat-icon-button aria-label="logout-icon" (click)="logout()">
+                    <mat-icon class="logout-icon">power_settings_new</mat-icon>
+                </button>
+                <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+                    <mat-icon></mat-icon>
+                </button>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <app-vacation *ngIf="showVacation"></app-vacation>
+        <app-report *ngIf="showReport"></app-report>
+        <app-admin *ngIf="showAdmin"></app-admin>
+        <app-com *ngIf="showCom"></app-com>
+    </mat-sidenav-content>
+</mat-sidenav-container> -->
+<mat-progress-bar mode="indeterminate" color="warn" *ngIf="spinnerValue"></mat-progress-bar>
+<mat-sidenav-container class="main-container" >
+    <mat-sidenav #sidenav [mode]="mode.value">
+        <ul>
+            <mat-toolbar color="primary">
+                <mat-toolbar-row>
+                    <button mat-icon-button (click)="sidenav.toggle()">
+                        <mat-icon aria-hidden="false" aria-label="home icon">menu</mat-icon>
+                    </button>
+                    <div class="mat-headline" (click)="sidenav.toggle()">Dahaka</div>
+                </mat-toolbar-row>
+            </mat-toolbar>
+        </ul>
+        <ul>
+            <button mat-button [routerLink]="['/timesheet']" (click)="sidenav.toggle()">
+                <mat-icon class="material-icons">timer</mat-icon>
+                &nbsp;Time Sheet
+            </button>
+        </ul>
+        <ul>
+            <button mat-button [routerLink]="['/vacation']" (click)="sidenav.toggle()">
+                <mat-icon class="material-icons">explore</mat-icon>
+                &nbsp;Vacation
+            </button>
+        </ul>
+        <ul>
+            <button mat-button [routerLink]="['/admin']" (click)="sidenav.toggle()">
+                <mat-icon class="material-icons">admin_panel_settings</mat-icon>
+                &nbsp;Admin
+            </button>
+        </ul>
+        <ul>
+            <!-- <button mat-button (click)="sidenav.toggle()" routerLink="/report">Report</button> -->
+            <button mat-button [routerLink]="['/report']" (click)="sidenav.toggle()">
+                <mat-icon class="material-icons">timeline</mat-icon> 
+                &nbsp;Report
+            </button>
+        </ul>
+        <ul>
+            <button mat-button [routerLink]="['/recognition']" (click)="sidenav.toggle()">
+                <mat-icon class="material-icons">star</mat-icon> 
+                &nbsp;Accolade
+            </button>
+        </ul>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            <mat-toolbar-row>
+                <button mat-icon-button (click)="sidenav.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <div class="mat-headline" (click)="sidenav.toggle()">Dahaka</div>
+                <span class="spacer"></span>
+
+                <!-- <mat-form-field class="status-filter-form-field">
+                    <mat-label>Search</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. SR Description, Number, etc.." #input>
+                </mat-form-field> -->
+                <!-- <button (click)="sendMessage()">Send Message</button> -->
+                <mat-form-field class="filter" >
+                    <mat-label>Search</mat-label>
+                    <input matInput (keyup)="headerFilterEvent($event)" placeholder="Email content, sender,..," #input>
+                  </mat-form-field>
+                  <!-- &nbsp;&nbsp;&nbsp;&nbsp; -->
+                  <span class="spacer"></span>  
+
+                <mat-form-field class="header-date" >
+                    <input matInput [matDatepicker]="dp" [formControl]="selectedDate" (dateInput)="onMonthSelection()">
+                    <mat-datepicker-toggle matSuffix [for]="dp">
+                        <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #dp disabled="false">
+                    </mat-datepicker>
+                  </mat-form-field>
+                  &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+
+                <!-- <customDatePicker></customDatePicker>   -->
+
+                <button mat-flat-button [routerLink]="['/profile']">{{userName}}</button> &nbsp;&nbsp;
+                <button mat-stroked-button aria-label="logout-icon" (click)="logout()" color="warn">
+                    <mat-icon class="logout-icon">power_settings_new</mat-icon>
+                </button>
+                <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+                    <mat-icon></mat-icon>
+                </button> -->
+            </mat-toolbar-row>
+        </mat-toolbar>        
+        <div>
+            <ng-content></ng-content>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

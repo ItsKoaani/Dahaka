@@ -1,14 +1,195 @@
 <!-- dialog-box.component.html -->
-<h1 mat-dialog-title>Row Action selected <strong>"{{action}}"</strong></h1>
+<!-- 
 <div mat-dialog-content>
   <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <input placeholder="{{action}} SR Number" matInput [(ngModel)]="local_data.srNumber">
+    <div>
+    <h1 mat-dialog-title style="color:teal">Information!</h1>
+    
+    <form [formGroup]="registerForm" class="sr-details-input-form">    
+      <table>
+
+            <tr>
+              <td style="width:33%">
+              <mat-form-field appearance="outline" class="form-inputs-Admin">
+                  <mat-label>SR Number</mat-label>
+                  <input class="srNumberClass" matInput type="number" formControlName="fcSrNumber" >
+              </mat-form-field>
+            </td>
+              <td style="width:33%">
+              <mat-form-field appearance="outline" class="form-inputs-Admin">
+                  <mat-label>SR Description</mat-label>
+                  <input matInput formControlName="fcDescription" >
+              </mat-form-field>
+            </td >
+              <td style="width:33%">
+              <mat-form-field appearance="outline" class="form-inputs-Admin">
+                  <mat-label>Ticket Type</mat-label>
+                  <mat-select formControlName="fcType" name="fcType"  >
+                    <mat-option *ngFor="let item of typeList" [value]="item">
+                      {{item}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </td>
+<td style="width:33%">
+              <mat-form-field appearance="outline" class="form-inputs-Admin">
+                  <mat-label>Group</mat-label>
+                  <mat-select formControlName="fcGroup" name="fcGroup"  >
+                    <mat-option *ngFor="let item of groupList" [value]="item">
+                      {{item}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </td>
+              </tr>
+                <mat-form-field appearance="outline" class="form-inputs-Admin">
+                  <mat-label>Assignee</mat-label>
+                  <mat-select formControlName="fcAssignee" name="assignee"  >
+                    <mat-option *ngFor="let item of resourceList" [value]="item">
+                      {{item.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              <mat-form-field appearance="outline" class="form-inputs-Admin">
+                  <mat-label>SR Status</mat-label>
+                  <mat-select formControlName="fcSrStatus" name="fcSrStatus"  >
+                    <mat-option *ngFor="let item of statusList" [value]="item">
+                      {{item}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+          
+              <mat-form-field appearance="outline" class="form-inputs-Admin">
+                  <mat-label>Open Date</mat-label>
+                  <input matInput [matDatepicker]="openDatePicker" formControlName="fcOpenDate" [max]="today">
+                  <mat-datepicker-toggle matSuffix [for]="openDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #openDatePicker disabled="false"></mat-datepicker>
+              </mat-form-field>                
+          
+              <mat-form-field appearance="outline" class="form-inputs-Admin" >
+                  <mat-label>Priority</mat-label>
+                  <mat-select formControlName="fcPriority" name="fcPriority"  >
+                    <mat-option *ngFor="let item of priorityList" [value]="item">
+                      {{item}}
+                    </mat-option>
+                  </mat-select>
+              </mat-form-field>
+              <button mat-raised-button color="primary" type="Update" >Save/Add</button>    
+              <button mat-raised-button color="accent" type="reset" (click)="onReset()" >Reset</button>
+            </table>
+      
+  </form>
+   </div>
   </mat-form-field>
   <ng-template #elseTemplate>
-    Do you want to <b>{{local_data.srNumber}}</b>?
+    <div>
+    <h1 mat-dialog-title style="color:red">WARNING!</h1>
+    <mat-divider></mat-divider>    
+    <br>
+    Do you want to delete <b>{{local_data.srNumber}}</b>?
+  </div>
   </ng-template>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="doAction()">{{action}}</button>
-  <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
-</div>
+<div class="button-row" >
+  <button mat-flat-button (click)="doAction()" color="primary">{{action}}</button>
+
+  <button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+</div> -->
+
+
+  <div class="controlers-container" >
+  <table *ngIf="action != 'Delete'; else elseTemplate">
+      <tr>
+          <td style="width:33%">
+              <mat-form-field appearance="outline" class="form-inputs-Admin">
+                  <mat-label>SR Number</mat-label>
+                  <input class="srNumberClass" matInput type="number" disabled [(ngModel)]="local_data.srNumber" required>
+              </mat-form-field>
+          </td>
+          <td style="width:33%">
+              <mat-form-field appearance="outline" class="form-inputs-Admin">
+                  <mat-label>SR Description</mat-label>
+                  <input matInput [(ngModel)]="local_data.srDesc" required>
+              </mat-form-field>
+          </td>
+          <td style="width:33%">
+              <mat-form-field appearance="outline" class="form-inputs-Admin">
+                  <!-- <mat-label>{{local_data.srType}}</mat-label> -->
+                  <mat-select  name="fcType"  [(ngModel)]="local_data.srType" required>
+                    <mat-option *ngFor="let item of typeList" [value]="item">
+                      {{item}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <mat-form-field appearance="outline" class="form-inputs-Admin">
+                  <!-- <mat-label>{{local_data.srGroup}}</mat-label> -->
+                  <mat-select  name="fcGroup" [(ngModel)]="local_data.srGroup" required>
+                    <mat-option *ngFor="let item of groupList" [value]="item"> 
+                      {{item}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+          </td>
+          <td>
+              <mat-form-field appearance="outline" class="form-inputs-Admin">
+                  <!-- <mat-label>{{local_data.srAssignee}}</mat-label> -->
+                  <mat-select  name="assignee" [(ngModel)]="local_data.srAssignee" required>
+                    <mat-option *ngFor="let item of resourceList" [value]="item.name">
+                      {{item.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+          </td>
+          <td>
+              <mat-form-field appearance="outline" class="form-inputs-Admin">
+                  <!-- <mat-label>{{local_data.srStatus}}</mat-label> -->
+                  <mat-select name="fcSrStatus" [(ngModel)]="local_data.srStatus" required >
+                    <mat-option *ngFor="let item of statusList" [value]="item">
+                      {{item}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <mat-form-field appearance="outline" class="form-inputs-Admin">
+                  <mat-label>Open Date</mat-label>
+                  <input matInput [matDatepicker]="openDatePicker"  [max]="today" [(ngModel)]="local_data.openDate" > 
+                  <mat-datepicker-toggle matSuffix [for]="openDatePicker" ></mat-datepicker-toggle>
+                  <mat-datepicker #openDatePicker disabled="false"></mat-datepicker>
+              </mat-form-field>                
+          </td>
+          <td>
+              <mat-form-field appearance="outline" class="form-inputs-Admin" >
+                  <mat-label>Priority</mat-label>
+                  <mat-select name="fcPriority" [(ngModel)]="local_data.srPriority" required>
+                    <mat-option *ngFor="let item of priorityList" [value]="item">
+                      {{item}}
+                    </mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </td>
+          <td>
+              <!-- <button mat-raised-button color="primary" (click)="doAction()">Save/Add</button>    
+              <button mat-raised-button color="accent"  (click)="closeDialog()" >Cancel</button> -->
+          </td>
+      </tr>
+  </table>
+  <ng-template #elseTemplate>
+    Sure to delete <b>{{local_data.srNumber}}</b>?
+  </ng-template>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button (click)="doAction()" color="primary">{{action}}</button>
+    &nbsp;&nbsp;&nbsp; 
+    <button mat-raised-button (click)="closeDialog()" color="warn">Cancel</button>
+  </div>
+
+

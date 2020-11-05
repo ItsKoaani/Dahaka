@@ -1,0 +1,25 @@
+.spacer {
+    flex: 1 1 auto;
+  }
+
+
+  button {
+    border-radius: 20px;
+    /* border: 2px solid mediumseagreen; */
+    /* background-color: dimgray;
+	  color: #FFFFFF; */
+  }
+
+  /* .sidenav-menu{
+    font-size: x-large;align-items: baseline;
+  } */
+
+  .header-date{
+    font-size: 80%;
+    width: 10%;
+  }
+
+  .filter{
+    font-size: 80%;
+    width: 40%;
+  }

@@ -1,3 +1,28 @@
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: normal;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+  
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+  
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+  
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+  }
+
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
@@ -9,9 +34,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     vertical-align: middle;
 }
 
-form, login-form, ng-pristine, ng-valid,ng-touched {
+/* form, login-form, ng-pristine, ng-valid,ng-touched {
     text-align-last: center;
-}
+} */
 
 .mat-headline {
     /* font-size: xx-large; */
@@ -53,6 +78,12 @@ table, th, td {
     font-size: 20px;
     width: 60%;
   }
+
+.srNumberClass::-webkit-inner-spin-button, 
+.srNumberClass::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
   
   /* .mat-form-field-appearance-legacy .mat-form-field-wrapper {
     padding-bottom: 1.0em !important; 

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl} from '@angular/forms';
-import {SelectionModel} from '@angular/cdk/collections';
+import { SelectionModel } from '@angular/cdk/collections';
 
 import { CrudService } from '../../service/crud.service';
 
@@ -13,12 +12,10 @@ import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 import { MatTable } from '@angular/material/table';
+import {SrinputComponent} from '../srinput/srinput.component'
 
-
-export interface IResource{
-  name: string;
-  employeeId: string;
-}
+import {FormControl} from '@angular/forms';
+import { DataService } from 'src/app/service/common/data.service';
 
 //const m = moment(); 
 
@@ -29,53 +26,46 @@ export interface srData {
   srStatus: string;
   srDesc: string;
   srAssignee: string;
+  srType: string;
+  srGroup: string;
 }
-
-
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
+
 export class AdminComponent implements OnInit {
-  control: AbstractControl = null;
-  registerForm: FormGroup;
-  submitted = false;
+  //control: AbstractControl = null;
+
+  mode = new FormControl('over');
 
   tablElementData: srData[] = [];
-  resourceList:IResource[] = [];
- 
-  priorityList: string[] = ['1', '2', '3', '3', '4', '5'];
 
   selection = new SelectionModel<srData>(true, []);
 
-  displayedColumns: string[] = ['srNumber', 'srDesc', 'srAssignee', 'srStatus', 'openDate', 'srPriority', 'action'];
-  columnsToDisplay: string[] = this.displayedColumns.slice();
+  displayedColumns: string[] = ['srNumber', 'srDesc', 'srType','srGroup','srAssignee', 'srStatus', 'openDate', 'srPriority', 'action'];
+  
   dataSource: any;
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  spinnerValue: boolean = false;
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(public crudService: CrudService, private formBuilder: FormBuilder, public dialog: MatDialog) {
+  constructor(public crudService: CrudService, public dialog: MatDialog, private data: DataService) { }
 
-  }
-
-  @ViewChild(MatTable,{static:true}) table: MatTable<any>; //table of typr MatTable module
-
+  @ViewChild(MatTable, { static: true }) table: MatTable<any>; //table of typr MatTable module
+  
+  
   ngOnInit(): void {
-
-    this.registerForm = this.formBuilder.group({
-      fcOpenDate: [moment() , Validators.required],
-      fcSrNumber: ['', Validators.required],
-      fcDescription: ['', Validators.required],
-      fcAssignee: ['', [Validators.required]],
-      fcSrStatus: ['', [Validators.required]],
-      fcPriority: ['', Validators.required]
-  });
-
+    //to set spinner on load
+    this.data.sprinnerValue.subscribe(_spinnerValue => this.spinnerValue = _spinnerValue)
 
     this.crudService.getAllSrDetail().subscribe(data => {
+      //console.log(data);
+      this.data.changeSpinnerValue(true);
       this.tablElementData = data.map(item => {
         return {
           srId: item.payload.doc.id,
@@ -84,63 +74,21 @@ export class AdminComponent implements OnInit {
           srStatus: item.payload.doc.data()['srStatus'],
           srDesc: item.payload.doc.data()['srDesc'],
           srAssignee: item.payload.doc.data()['srAssignee'],
-          openDate: moment.unix(item.payload.doc.data()['openDate']['seconds']).format('MM/DD/YYYY')
+          openDate: moment.unix(item.payload.doc.data()['openDate']['seconds']).format('MM/DD/YYYY'),
+          srType: item.payload.doc.data()['srType'],
+          srGroup: item.payload.doc.data()['srGroup']
           // moment.unix(item['openDate']['seconds']).format('MM/DD/YYYY')
         }
       })
-      console.log(this.tablElementData);
+      //console.log(this.tablElementData);
       this.dataSource = new MatTableDataSource<srData>(this.tablElementData);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       //console.log(this.tablElementData);
+      this.data.changeSpinnerValue(false);
     })
 
-    this.crudService.getAllResource().subscribe(data =>{
-      this.resourceList = data.map(item=>{
-        return{
-          name: item['name'], 
-          employeeId: item['employeeId']
-        }
-      })
-    })
-  }
 
-  get f() { return this.registerForm.controls; }
-
-  onReset() {
-    this.submitted = false;
-    this.registerForm.reset();
-    this.registerForm.markAsUntouched();
-
-    Object.keys(this.registerForm.controls).forEach((name) => {
-      this.control = this.registerForm.controls[name];
-      this.control.setErrors(null);
-    });
-  }
-
-  onSave(){
-    this.submitted = true;
-    
-    if (this.registerForm.invalid) {
-      return;
-    }
-
-    let record = {};
-    
-    record['openDate']=this.f.fcOpenDate.value;
-    //console.log("form date is  "+this.f.fcOpenDate.value);
-
-    record['srNumber']=this.f.fcSrNumber.value;
-    record['srDesc']=this.f.fcDescription.value;
-    record['srAssignee']=this.f.fcAssignee.value['name'];
-    record['srPriority']=this.f.fcPriority.value;
-    record['srStatus']=this.f.fcSrStatus.value;
-
-    this.crudService.insertSrDetails(record).then(res => {
-      console.log(res);
-    })
-    this.onReset();
-    
   }
 
   applyFilter(event: Event) {
@@ -149,39 +97,38 @@ export class AdminComponent implements OnInit {
   }
 
   //to ennable edit and update buttons
-
   openDialog(action, obj) {  //add action and obj send here from html file
     obj.action = action;      //setting action ppt of obj to action(add, delete, update)
     const dialogRef = this.dialog.open(DialogBoxComponent, {   // this opens 'dialog' which is initaialised in constructor 
-      width: '1000px', //open method has component name and object with ppt like style and 
-      data:obj      // obj as ppt
+      width: '60%', //open method has component name and object with ppt like style and 
+      data: obj      // obj as ppt
     });
 
     dialogRef.afterClosed().subscribe(result => {  //after dialogdif closed. we are subscribing to its values      
-       if(result.event == 'Update'){   //if update is called
-        this.updateRowData(result.data);  
-      }else if(result.event == 'Delete'){
-        this.deleteRowData(result.data); 
+      if (result.event == 'Update') {   //if update is called
+        this.updateRowData(result.data);
+      } else if (result.event == 'Delete') {
+        this.deleteRowData(result.data);
       }
     });
   }
 
-  updateRowData(row_obj){
-    this.dataSource = this.dataSource.data.filter((value,key)=>{   //filter value and keys here
-      if(value.srId == row_obj.srId){  //if position id of row obj and current ds values are same
-        this.crudService.update_employee(value.srId, row_obj) //then obj name is assigned to value name
+  updateRowData(row_obj) {
+    this.dataSource = this.dataSource.data.filter((value, key) => {   //filter value and keys here
+      if (value.srId == row_obj.srId) {  //if position id of row obj and current ds values are same
+        this.crudService.update_srDetail(value.srId, row_obj) //then obj name is assigned to value name
       }
       this.table.renderRows(); // nw reders data
       return true; //return true after render
     });
   }
 
-  deleteRowData(row_obj){
-    console.log(row_obj)
-    console.log(this.dataSource)
-    this.dataSource = this.dataSource.data.filter((value,key)=>{
-      if(value.srId == row_obj.srId){
-        this.crudService.delete_employee(row_obj.srId);
+  deleteRowData(row_obj) {
+    //console.log(row_obj)
+    //console.log(this.dataSource)
+    this.dataSource = this.dataSource.data.filter((value, key) => {
+      if (value.srId == row_obj.srId) {
+        this.crudService.delete_srDetail(row_obj.srId);
       }
       return true;  //checks for positon of delete and current ds position to be true
     });

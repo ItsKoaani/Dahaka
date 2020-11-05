@@ -1,0 +1,146 @@
+<!-- <mat-progress-bar mode="indeterminate" color="warn" *ngIf="spinnerValue"></mat-progress-bar>
+<mat-toolbar color="primary">
+    <div class="mat-headline">Dahaka</div>
+    <span class="spacer"></span>
+    <button mat-stroked-button [routerLink]="['/dahaka']">Home</button>
+    <button mat-icon-button aria-label="logout-icon" (click)="logout()">
+        <mat-icon class="logout-icon">power_settings_new</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-grid-list cols="2" rowHeight="658px">
+    <form [formGroup]="formImageTemplate">
+    <mat-grid-tile>
+        <mat-card class="example-card">
+            <mat-card-header>
+                <div mat-card-avatar class="header-image-general"*ngIf="userData[0].role === 'general'" ></div>
+                <div mat-card-avatar class="header-image-admin"*ngIf="userData[0].role === 'admin'" ></div>
+                <mat-card-title>{{userData[0].first_name}}</mat-card-title>
+                <mat-card-subtitle *ngIf="userData[0].role === 'general'">
+                    Yet another bloke</mat-card-subtitle>
+                <mat-card-subtitle *ngIf="userData[0].role === 'admin' ">I am not a Admin, I am THE Admin1</mat-card-subtitle>
+            </mat-card-header>
+            
+                <img mat-card-image [src]="imageSrc" width="400px" height="350px" (click)="fileUploader.click()">
+                <input type="file" formControlName="imageURL" #fileUploader (change)="showPreviewAndUpdateDisplayPicture($event)" hidden="true"
+                    accept="image/*">
+                <mat-card-content>
+                    <mat-form-field class="caption-form-field" *ngIf="editMode">
+                        <input matInput type="text" formControlName="formCaption">
+                    </mat-form-field>
+                    <div *ngIf="!editMode">
+                        {{formImageTemplate.controls.formCaption.value}}
+                        <button mat-icon-button type="button" (click)="onCaptionEdit()" *ngIf="!editMode">
+                            <mat-icon>cached</mat-icon>
+                        </button>
+                    </div>
+                    <button mat-icon-button type="button" *ngIf="editMode" (click)="updateCaption()">
+                        <mat-icon>check</mat-icon>
+                    </button>
+                    <button mat-icon-button type="reset" *ngIf="editMode" (click)="cancelCaption()">
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-card-content>
+            
+            <mat-card-actions>
+                
+            </mat-card-actions>
+        
+        </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <mat-card>
+            Name: {{userData[0].last_name}}, {{userData[0].first_name}}<br><br>
+            Email ID: {{userData[0].email_id}}<br><br>
+            Employee ID: {{userData[0].employee_id}}<br><br>
+            Phone Number: {{userData[0].phone_number}}<br><br>
+            Current Location: {{userData[0].current_location}}<br><br>
+            Office Location: {{userData[0].office_location}}
+        </mat-card>
+    </mat-grid-tile>
+</form>
+</mat-grid-list> -->
+
+<!-- Updated profile page -->
+<mat-progress-bar mode="indeterminate" color="warn" *ngIf="spinnerValue"></mat-progress-bar>
+<div class="hero">
+    <!-- left Side -->
+    <div class="left-col">
+        <div class="white-bar"> </div>
+    
+        <div class="quote-text">
+            <img class="quote-img1" src="\assets\image\quotes.jpg">
+            <!-- <p style="text-indent:40px">
+                    You underestimate the power of dark side.
+                    - Dark Vadar
+                </p> -->
+            <form [formGroup]="formImageTemplate">
+            <mat-form-field class="caption-form-field" *ngIf="editMode" style="width: 80%;">
+                <input matInput type="text" formControlName="formCaption">
+            </mat-form-field>
+                <div *ngIf="!editMode">
+                <p style="text-indent:40px">{{formImageTemplate.controls.formCaption.value}}
+                    <button mat-icon-button type="button" (click)="onCaptionEdit()" *ngIf="!editMode">
+                        <mat-icon aria-hidden="false" aria-label="Example home icon">cached</mat-icon>
+                    </button>
+                </p>
+                </div>
+                <button mat-icon-button type="button" *ngIf="editMode" (click)="updateCaption()" >
+                    <mat-icon aria-hidden="false" aria-label="Example home icon">check</mat-icon>
+                </button>
+                <button mat-icon-button type="reset" *ngIf="editMode" (click)="cancelCaption()">
+                    <mat-icon aria-hidden="false" aria-label="Example home icon">cancel</mat-icon>
+                </button>
+            </form>
+            <img class="quote-img2" src="\assets\image\quotes.jpg">
+        </div>
+    </div>
+
+    <!-- Right Side -->
+    <div class="right-col">
+        <div class="red-bar"> <span></span> </div>
+
+        <div class="wrapper">
+            <div class="btn1">
+                <button type="button" (click)="home()" >Home</button>
+            </div>
+        </div>
+
+        <div class="wrapper">
+            <div class="btn2">
+                <button type="button" (click)="logout()">Logout</button>
+            </div>
+        </div>
+        
+        <form [formGroup]="formImageTemplate">
+            <div class="dp-image">
+                <h1>&nbsp;{{userData[0].first_name}}</h1>
+                <img mat-card-image [src]="imageSrc" width="400px" height="350px" (click)="fileUploader.click()">
+                <input type="file" formControlName="imageURL" #fileUploader (change)="showPreviewAndUpdateDisplayPicture($event)" hidden="true"
+                    accept="image/*">
+            </div>
+        </form>
+        <div class="user-detail-container">
+            <ul>
+                <li>
+                    <strong>Name:</strong>&nbsp; {{userData[0].last_name}}, {{userData[0].first_name}}
+                </li>
+                <li>
+                    <strong>Email ID:</strong>&nbsp; {{userData[0].email_id}}
+                </li>
+                <li>
+                    <strong>Employee Number:</strong>&nbsp;{{userData[0].employee_id}}
+                </li>
+                <li>
+                    <strong>Phone:</strong>&nbsp; {{userData[0].phone_number}}
+                </li>
+                <li>
+                    <strong>Current Location:</strong>&nbsp; {{userData[0].current_location}}
+                </li>
+                <li>
+                    <strong>Office Location:</strong>&nbsp; {{userData[0].office_location}}
+                </li>
+            </ul>
+        </div>
+        <div class="bottom-bar"> <span></span> </div>
+    </div>
+</div>

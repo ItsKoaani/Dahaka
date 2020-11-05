@@ -1,0 +1,12 @@
+table {
+    width: 100%;
+  }
+  
+  .filter{
+    font-size: 14px;
+    width: 40%;
+  }
+  
+  /* td, th {
+    width: 25%;
+  } */

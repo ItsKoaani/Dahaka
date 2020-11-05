@@ -15,10 +15,16 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatCardModule} from '@angular/material/card';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 const MaterialComponents = [MatButtonModule, MatFormFieldModule, MatInputModule, MatToolbarModule,
    MatListModule, MatTableModule, MatSidenavModule, MatIconModule, MatSelectModule, MatGridListModule
-  , MatDatepickerModule, MatNativeDateModule, MatPaginatorModule, MatSortModule, MatCheckboxModule];
+  , MatDatepickerModule, MatNativeDateModule, MatPaginatorModule, MatSortModule, MatCheckboxModule
+  , MatTabsModule, MatProgressBarModule, MatCardModule, MatSnackBarModule, MatProgressSpinnerModule];
 
 @NgModule({
   
